@@ -43,13 +43,14 @@ public class AlunoController {
 	public String salvar(@ModelAttribute Aluno aluno){
 		System.out.println("Aluno para salvar: " + aluno);
 		try {
-			//List<Double> latElong = geolocalizacaoService.obterLatELongPor(aluno.getContato());
-			//aluno.getContato().setCoordinates(latElong);
-			repository.salvar(aluno);
+			List<Double> latElong = geolocalizacaoService.obterLatELongPor(aluno.getContato());
+			aluno.getContato().setCoordinates(latElong);
+			
 		} catch (Exception e) {
 			System.out.println("Endereco nao localizado");
 			e.printStackTrace();
 		} 
+		repository.salvar(aluno);
 		
 		return "redirect:/";
 	}

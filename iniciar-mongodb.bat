@@ -1,0 +1,1 @@
+C:\software\mongodb-win32-x86_64-2008plus-ssl-3.4.24\bin\mongod --dbpath="C:\software\mongodb-win32-x86_64-2008plus-ssl-3.4.24\data\db"

@@ -20,7 +20,7 @@ import br.com.alura.escolalura.models.Contato;
 public class GeolocalizacaoService {
 	
 	public List<Double> obterLatELongPor(Contato contato) throws ApiException, InterruptedException, IOException{
-		GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAIPw0BOFbsavl2S0XJm366GqIL8WaL4xw");
+		GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCK93yhS2nUjGw-rILvN7VpOZTFvpbCU1M");
 		
 		GeocodingApiRequest request = GeocodingApi.newRequest(context).address(contato.getEndereco());
 		

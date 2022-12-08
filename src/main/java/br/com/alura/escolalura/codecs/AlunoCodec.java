@@ -72,17 +72,18 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
 			document.put("notas", notasParaSalvar);			
 		}
 		
-		/*
+		// Recupera as coordenadas do contato
 		List<Double> coordinates = new ArrayList<Double>();
 		for(Double location : contato.getCoordinates()){
 			coordinates.add(location);
 		}
 		
+		// Mapeia contato
 		document.put("contato", new Document()
 				.append("endereco" , contato.getEndereco())
 				.append("coordinates", coordinates)
 				.append("type", contato.getType()));
-		*/
+		
 		
 		codec.encode(writer, document, encoder);
 		
@@ -135,14 +136,13 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
 			aluno.setHabilidades(habilidadesDoAluno);
 		}
 		
-		/*
+		// Mapeia contato
 		Document contato = (Document) document.get("contato");
 		if (contato != null) {
 			String endereco = contato.getString("contato");
 			List<Double> coordinates = (List<Double>) contato.get("coordinates");
 			aluno.setContato(new Contato(endereco, coordinates));
-		}
-		*/
+		}		
 		
 		return aluno;
 	}

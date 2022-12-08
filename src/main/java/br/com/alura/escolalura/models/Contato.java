@@ -1,5 +1,6 @@
 package br.com.alura.escolalura.models;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Contato {
@@ -26,6 +27,9 @@ public class Contato {
 	}
 
 	public List<Double> getCoordinates() {
+		if(coordinates == null) {
+			this.coordinates = Arrays.asList(0.0, 0.0);
+		}
 		return coordinates;
 	}
 

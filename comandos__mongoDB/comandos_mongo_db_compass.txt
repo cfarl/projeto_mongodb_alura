@@ -1,0 +1,165 @@
+-----------------------------------------------------------
+- Ferramenta visual para acessar o Mongo: Compass
+-----------------------------------------------------------
+
+--------------------------------------
+- Para ver os databases criados:
+----------------------------------------
+
+show databases
+
+-----------------------------------------------------------
+- Para criar (ou selecionar) o dabatase "Alura_Serie":
+-----------------------------------------------------------
+
+use Alura_Serie
+
+-----------------------------------------------------------
+- Para criar collection "series":
+-----------------------------------------------------------
+
+db.createCollection("series")
+
+-----------------------------------------------------------
+- Para excluir collection "series":
+-----------------------------------------------------------
+
+db.series.drop()
+
+-----------------------------------------------------------
+- Para excluir database "Alura_Serie":
+-----------------------------------------------------------
+
+use "Alura_Serie" --> vai para o banco de dados
+
+db.dropDatabase()
+
+-----------------------------------------------------------
+- Para inserir um novo documento:
+-----------------------------------------------------------
+
+db.series.insertOne({
+   "Série": "Fleabag",
+   "Ano de lançamento": 2016,
+    "Temporadas disponíveis": 2
+})
+
+db.series.insertMany([
+	{   "Série ": "Made in Heaven",
+        "Linguagem": "Hindi",
+        "Genero": "Drama",
+        "IMDb Avaliação": 8.3,
+        "Classificação": "18+"
+    },{
+        "Série ": "Homecoming",
+        "Temporadas disponíveis": 2,
+        "IMDb Avaliação": 7.5,
+        "Classificação": "16+"
+	}])
+
+-----------------------------------------------------------
+- Para fazer consultas no Compass:
+-----------------------------------------------------------
+
+- Informar no Filter (equivalente ao where):
+
+  {$and:[{"Ano de lançamento": 2018}, {"Classificação":"18+"}] }  --> exemplo de como fazer um "and"
+  
+  {"Ano de lançamento": {$in:[2019,2020]}} --> exemplo de como fazer um "in"
+
+  {"Temporadas disponíveis": {$gte:2}} --> temporadas >= 2
+  
+- Project (escolhe os campos que serão retornados na consulta):
+
+  { "Série": 1, "Linguagem": 1, _id:0} --> Recupera apenas campos "Série" e "Linguagem",  
+  
+- Sort:
+
+  { "Série": 1 }  --> ordem crescente
+  
+  { "Série": - 1 }  --> ordem decrescente  
+  
+-----------------------------------------------------------
+- Para fazer consultas no Mongosh:
+-----------------------------------------------------------
+
+- Sintaxe:
+
+  db.collection.find(query, projection)
+  
+- Exemplo (recupera série e linguagem com ano de lançamento 2018 e classificação 18+): 
+
+db.series.find(  
+  {$and:[{"Ano de lançamento": 2018}, {"Classificação":"18+"}] },  
+  { "Série": 1, "Linguagem": 1, _id:0} 
+).limit(5)  
+
+Linhas da query: 
+1) collection da consulta
+2) where da pesquisa
+3) campos retornados
+4) modificador (limita resultados, etc)
+
+- Para recuperar todos documentos da coleção:
+
+  db.series.find()
+
+- Para recuperar documentos de 2018:
+
+  db.series.find({"Ano de lançamento": 2018})  
+  
+- Para recuperar somente campos "Série" e "Ano de lançamento":
+
+  db.series.find({},{ "Série": 1, "Linguagem": 1, _id:0})  
+
+- Para recuperar séries de 2019 e 2020:  
+  
+  db.series.find({"Ano de lançamento": {$in:[2019,2020]}})
+  
+- Para recuperar primeiros 5 documentos:  
+
+  db.series.find().limit(5)
+  
+- Para recuperar primeiro 5 documentos, mas ordenados pelo campo "série":  
+
+  db.series.find().sort({"Série":1});limit(5)
+  
+- Para recuperar documentos que possui "Ação" e "Comédia" no campo "gênero":  
+  
+  db.series.find({"Genero": {$all:["Ação", "Comédia"]}})
+  
+-----------------------------------------------
+- Para executar updates no Mongosh :
+-----------------------------------------------
+  
+- Sintaxe:
+
+  db.collection.updateOne(filtro, operacao set)
+  db.collection.updateMany(filtro, operacao set)
+  
+- Exemplo:   
+  
+  db.series.find({"Série": "Grimm"})
+  
+  db.series.updateOne({"Série": "Grimm"}, {$set:{"Temporadas disponíveis": 6}})
+  
+  db.series.updateOne({"Série": "Grimm"}, {$set:{"Classificação": "16+"}}) --> Adiciona atributo que não existia
+  
+  db.series.find({"Série": {$in:["Four More Shots Please", "Fleabag"]}})
+  
+  db.series.updateMany({"Série": {$in:["Four More Shots Please", "Fleabag"]}}, {$set:{"Classificação": "18+"}})
+  
+-----------------------------------------------
+- Para executar deletes no Mongosh :
+-----------------------------------------------
+  
+- Sintaxe:
+
+  db.collection.deleteOne(filtro)
+  db.collection.deleteMany(filtro)
+  
+- Exemplo:   
+  
+  db.series.find({"Série": "The Boys"})
+  
+  db.series.deleteOne({"Série": "The Boys"})
